@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "tintinweb.vscode-vyper",
+    "ms-python.python",
+    "github.vscode-github-actions",
+    "esbenp.prettier-vscode"
+  ]
+}
