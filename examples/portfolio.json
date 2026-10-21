@@ -1,0 +1,45 @@
+{
+  "as_of": 1760000000,
+  "cash": 650000,
+  "lender_principal": 600000,
+  "reserve": 20000,
+  "sector_stress_bps": {
+    "trade": 600,
+    "services": 400
+  },
+  "lines": [
+    {
+      "line_id": 1,
+      "sector": "trade",
+      "status": "active",
+      "limit": 200000,
+      "principal": 100000,
+      "interest": 1200,
+      "collateral": 40000,
+      "apr_bps": 1200,
+      "next_due": 1759000000
+    },
+    {
+      "line_id": 2,
+      "sector": "services",
+      "status": "active",
+      "limit": 150000,
+      "principal": 50000,
+      "interest": 800,
+      "collateral": 22000,
+      "apr_bps": 1400,
+      "next_due": 1761000000
+    },
+    {
+      "line_id": 3,
+      "sector": "trade",
+      "status": "closed",
+      "limit": 100000,
+      "principal": 0,
+      "interest": 0,
+      "collateral": 0,
+      "apr_bps": 1000,
+      "next_due": 1750000000
+    }
+  ]
+}

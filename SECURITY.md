@@ -75,3 +75,33 @@ Los hallazgos deben incluir:
 - contratos y funciones afectadas;
 - cambios recomendados;
 - tests que deberian fallar antes de la mitigacion y pasar despues.
+
+## Limites De Confianza
+
+```mermaid
+flowchart TB
+    A[Operadores autorizados] -->|configuracion| G[Configurator]
+    B[Prestatarios y lenders] -->|transacciones| C[Core]
+    K[Keepers] -->|checkpoint| C
+    G -->|parametros aprobados| C
+    C -->|vistas| L[Lens]
+    L -->|exportacion verificada| S[Analisis de cartera]
+    S -.->|sin permisos de escritura| C
+```
+
+Las vistas y el analizador externo no son fuentes de verdad para la
+liquidacion. Las decisiones que cambian estado se autorizan y ejecutan en los
+contratos. Antes de distribuir una exportacion, el operador debe comprobar
+bloque, red, direccion del contrato, decimales y consistencia de los totales.
+
+## Verificaciones Economicas
+
+- `principal <= limite` para cada linea y principal agregado reconciliado.
+- Liquidez disponible calculada tras separar colateral y reservas.
+- APR, puntos basicos y calendario expresados con unidades explicitas.
+- Cada cambio de estado deja un evento y puede reconstruirse desde un bloque.
+- Las politicas de sector limitan exposicion y la configuracion requiere los
+  roles previstos.
+
+La suite de CI compila Vyper, ejecuta tests de contratos y del analizador, y
+valida la identidad del tag estable frente a `main` y `production`.
