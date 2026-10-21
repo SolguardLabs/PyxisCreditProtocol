@@ -1,0 +1,35 @@
+name: Release integrity
+
+on:
+  push:
+    branches: [production]
+    tags: [v1.0.0]
+  release:
+    types: [published]
+
+jobs:
+  identity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Verify immutable release identity and documentation
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main production refs/tags/v1.0.0
+          main_commit="$(git rev-parse origin/main)"
+          production_commit="$(git rev-parse origin/production)"
+          tag_commit="$(git rev-parse 'refs/tags/v1.0.0^{}')"
+          test "$main_commit" = "$production_commit"
+          test "$main_commit" = "$tag_commit"
+          test "$(git cat-file -t refs/tags/v1.0.0)" = tag
+          test -s assets/banner.png
+          test -s README.md
+          test -s SECURITY.md
+          test -s docs/arquitectura.md
+          test -s docs/modelo-economico.md
+          test -s docs/operacion.md
+          test -s docs/integracion.md
+          echo "Production commit: $main_commit"
